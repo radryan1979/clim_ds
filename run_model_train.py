@@ -44,11 +44,11 @@ import pytorch_ssim
 #-------------------------------------------#
 
 UPSCALE_FACTOR = 2
-NUM_EPOCHS = 2
+NUM_EPOCHS = 1
 
 base_folder = '/Volumes/DataDrive/clim_model_runs/'
 out_path = '/Volumes/DataDrive/clim_model_runs/'
-run_number = 2
+run_number = 3
 
 
 #-------------------------------------------#
@@ -103,6 +103,7 @@ mseLoss = nn.MSELoss()
 results = {'d_loss': [], 'g_loss': [], 'd_score': [], 'g_score': [], 'psnr': [], 'ssim': []}
 
 for epoch in range(1, NUM_EPOCHS + 1):
+    print(epoch)
     train_bar = tqdm(loader_train)
     running_results = {'batch_sizes': 0, 'd_loss': 0, 'g_loss': 0, 'd_score': 0, 'g_score': 0}
 
@@ -210,12 +211,12 @@ for epoch in range(1, NUM_EPOCHS + 1):
     results['psnr'].append(valing_results['psnr'])
     results['ssim'].append(valing_results['ssim'])
 
-    if epoch % 10 == 0 and epoch != 0:
-        stat_path = os.path.join(out_path,"statistics/")
-        print(stat_path)
-        data_frame = pd.DataFrame(
-            data = {'Loss_D': results['d_loss'], 'Loss_G': results['g_loss'], 'Score_D': results['d_score'], 
-                    'Score_G': results['g_score'], 'PSNR': results['psnr'], 'SSIM': results['ssim'], }, 
-                    index=range(1, epoch+1)
-        )
-        data_frame.to_csv(stat_path + 'srf_' + str(UPSCALE_FACTOR) + '_train_results.csv', index_label='Epoch')
+    stat_path = os.path.join(out_path,"statistics/")
+    print(stat_path)
+    data_frame = pd.DataFrame(
+        data = {'Loss_D': results['d_loss'], 'Loss_G': results['g_loss'], 'Score_D': results['d_score'], 
+                'Score_G': results['g_score'], 'PSNR': results['psnr'], 'SSIM': results['ssim'], }, 
+                index=range(1, epoch+1)
+    )
+    stat_file = f'stats_epoch{epoch}_run{run_number}.csv'
+    data_frame.to_csv(os.path.join(stat_path, stat_file), index_label='Epoch')
