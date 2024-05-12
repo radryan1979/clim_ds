@@ -36,7 +36,7 @@ import os
 UPSCALE_FACTOR = 2
 NUM_EPOCHS = 1
 
-base_folder = 'Volumes/DataDrive/clim_model_runs'
+base_folder = '/Volumes/DataDrive/clim_model_runs'
 run_number = 1
 
 
