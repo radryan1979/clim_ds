@@ -61,8 +61,8 @@ class SR_Dataset(data.Dataset):
         low_res[:, :] = f(xnew, ynew)
 
 
-        low_res_t = torch.from_numpy(low_res).float()
-        high_res_t = torch.from_numpy(high_res).float()
+        low_res_t = torch.nan_to_num(torch.from_numpy(low_res).float())
+        high_res_t = torch.nan_to_num(torch.from_numpy(high_res).float())
         
         return low_res_t.unsqueeze(0), high_res_t.unsqueeze(0)
 
@@ -84,30 +84,37 @@ class Discriminator(nn.Module):
 
             nn.Conv2d(64, 64, kernel_size=3, stride=2),
             #nn.BatchNorm2d(64),
+            nn.InstanceNorm2d(64),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(64, 128, kernel_size=3),
             #nn.BatchNorm2d(128),
+            nn.InstanceNorm2d(128),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(128, 128, kernel_size=3, stride=2),
             #nn.BatchNorm2d(128),
+            nn.InstanceNorm2d(128),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(128, 256, kernel_size=3),
             #nn.BatchNorm2d(256),
+            nn.InstanceNorm2d(256),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(256, 256, kernel_size=3, stride=2),
             #nn.BatchNorm2d(256),
+            nn.InstanceNorm2d(256),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(256, 512, kernel_size=3),
             #nn.BatchNorm2d(512),
+            nn.InstanceNorm2d(512),
             nn.LeakyReLU(0.2),
 
             nn.Conv2d(512, 512, kernel_size=3, stride=2),
             #nn.BatchNorm2d(512),
+            #nn.InstanceNorm2d(512),
             nn.LeakyReLU(0.2),
             
             Flatten(),
@@ -128,9 +135,12 @@ class ResidualBlock(nn.Module):
         self.layers = nn.Sequential(
             nn.ReplicationPad2d(1),
             nn.Conv2d(in_channels=num_channels, out_channels=64, kernel_size=3, stride=1, padding=0),
+            #nn.BatchNorm2d(64),
+            nn.InstanceNorm2d(64),
             nn.PReLU(),
             nn.ReplicationPad2d(1),
             nn.Conv2d(64, 64, 3, stride=1, padding=0),
+            #nn.BatchNorm2d(64)
         )
 
     def forward(self, x):
@@ -168,7 +178,8 @@ class Generator(nn.Module):
 
         self.post_resid_conv = nn.Sequential(
             nn.ReplicationPad2d(1),
-            nn.Conv2d(64, 64, 3, stride=1, padding=0)
+            nn.Conv2d(64, 64, 3, stride=1, padding=0),
+            #nn.BatchNorm2d(64)
         )
     
         self.conv_prelu = nn.Sequential(

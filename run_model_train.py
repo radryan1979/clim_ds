@@ -44,11 +44,11 @@ import pytorch_ssim
 #-------------------------------------------#
 
 UPSCALE_FACTOR = 2
-NUM_EPOCHS = 1
+NUM_EPOCHS = 2
 
 base_folder = '/Volumes/DataDrive/clim_model_runs/'
 out_path = '/Volumes/DataDrive/clim_model_runs/'
-run_number = 4
+run_number = 8
 
 
 #-------------------------------------------#
@@ -90,8 +90,10 @@ loader_test = DataLoader(sr_test, batch_size=BATCH_SIZE)
 #--------------------------------------------------#
 netG = models.Generator(1,UPSCALE_FACTOR)
 print('# generator parameters:', sum(param.numel() for param in netG.parameters()))
+print(netG)
 netD = models.Discriminator()
 print('# discriminator parameters:', sum(param.numel() for param in netD.parameters()))
+print(netD)
 
 optimizerG = optim.Adam(netG.parameters())
 optimizerD = optim.Adam(netD.parameters())
@@ -121,9 +123,9 @@ for epoch in range(1, NUM_EPOCHS + 1):
         ##################################
         real_img = Variable(target)
         #print(f"Real Image Shape: {real_img.shape}")
-        z = Variable(data)
+        #z = Variable(data)
         #print(f"z Variable Shape: {z.shape}")
-        fake_img = netG(z)
+        fake_img = netG(data)
         #print(f"Fake Image Shape: {fake_img.shape}")
 
         netD.zero_grad()
