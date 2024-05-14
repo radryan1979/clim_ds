@@ -116,17 +116,8 @@ for epoch in range(1, NUM_EPOCHS + 1):
         batch_size = data.size(0)
         running_results['batch_sizes'] += batch_size
 
-        ##################################  
-        # (1) Update D nework 
-        # we want real_out to be close 1, and fake_out to be close 0 
-        # maximize D(x) - D(G(z)) + [1] x: real_out D(G(z)): fake_out 
-        ##################################
         real_img = Variable(target)
-        #print(f"Real Image Shape: {real_img.shape}")
-        #z = Variable(data) Variable is deprecated
-        #print(f"z Variable Shape: {z.shape}")
         fake_img = netG(data)
-        #print(f"Fake Image Shape: {fake_img.shape}")
 
         netD.zero_grad()
         real_out = netD(real_img).mean()
@@ -134,10 +125,6 @@ for epoch in range(1, NUM_EPOCHS + 1):
         d_loss = 1 - real_out + fake_out
         d_loss.backward(retain_graph=True)
 
-
-        ###################################
-        # (2) Update G network: minimize 1-D(G(z)) + Perception Loss + Image Loss + TV Loss
-        ###################################
         netG.zero_grad()
         g_loss = mseLoss(fake_out, real_img)
         g_loss.backward()

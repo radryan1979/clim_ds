@@ -117,11 +117,6 @@ for epoch in range(1, NUM_EPOCHS + 1):
         batch_size = data.size(0)
         running_results['batch_sizes'] += batch_size
 
-        ##################################  
-        # (1) Update D nework 
-        # we want real_out to be close 1, and fake_out to be close 0 
-        # maximize D(x) - D(G(z)) + [1] x: real_out D(G(z)): fake_out 
-        ##################################
         real_img = target
         logits_real = netD(real_img)
         fake_img = netG(data)
