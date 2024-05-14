@@ -1,3 +1,8 @@
+# Adapted models from Vandal implementation
+# these run and work better in training
+# output of the generator isn't working right
+# data normalization or layer problem
+
 import math
 import torch
 from torch import nn

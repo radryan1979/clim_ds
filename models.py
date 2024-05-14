@@ -1,3 +1,8 @@
+# First attempt at models from Ledwig and Vandal implementaitons
+# Batch2d was blowing up, all commented out for now
+# issues with tensor shape somewhere in the layers
+# this model works well for reconstruction though
+
 
 import torch
 import torch.nn as nn

@@ -1,3 +1,6 @@
+# structural similarity index code
+# from Ledwig paper - will replace with PyTorch nativ module
+
 from math import exp
 
 import torch

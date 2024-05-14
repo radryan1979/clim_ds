@@ -1,3 +1,7 @@
+# runs the models from Ledwig
+# not always though - sometimes it
+# yells and fails
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -70,11 +74,7 @@ train_directory = '/Volumes/DataDrive/clim_tif/train'
 test_directory = '/Volumes/DataDrive/clim_tif/test'
 val_directory = '/Volumes/DataDrive/clim_tif/val'
 
-##########################################################################################
-#                                  BATCH_SIZE PARAMETER
 BATCH_SIZE = 1
-##########################################################################################
-
 
 sr_train = models.SR_Dataset(train_directory)
 loader_train = DataLoader(sr_train, batch_size=BATCH_SIZE)
@@ -123,7 +123,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
         ##################################
         real_img = Variable(target)
         #print(f"Real Image Shape: {real_img.shape}")
-        #z = Variable(data)
+        #z = Variable(data) Variable is deprecated
         #print(f"z Variable Shape: {z.shape}")
         fake_img = netG(data)
         #print(f"Fake Image Shape: {fake_img.shape}")

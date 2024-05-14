@@ -14,9 +14,6 @@ import os
 import pandas as pd
 import pytorch_ssim
 
-# import warnings
-# warnings.filterwarnings('ignore')
-
 #-------------------------------------------#
 
 UPSCALE_FACTOR = 2
@@ -46,11 +43,9 @@ train_directory = '/Volumes/DataDrive/clim_tif/train'
 test_directory = '/Volumes/DataDrive/clim_tif/test'
 val_directory = '/Volumes/DataDrive/clim_tif/val'
 
-##########################################################################################
-#                                  BATCH_SIZE PARAMETER
 BATCH_SIZE = 2
-##########################################################################################
 
+#--------------------------------------------------#
 
 sr_train = models.SR_Dataset(train_directory)
 loader_train = DataLoader(sr_train, batch_size=BATCH_SIZE)
@@ -170,6 +165,7 @@ for epoch in range(1, NUM_EPOCHS + 1):
         iter_count += 1
 
     # put the model in eval model
+    # this whole section is needs a rework - model output (mode2) isn't right
     netG.eval()
     
     with torch.no_grad():

@@ -1,13 +1,10 @@
+# loss models from Vandal paper
+
 import torch
 from torch import nn
 
 def discriminator_loss(logits_real, logits_fake):
-    """
-    
-    Adapted from homework 3 of CS231n at Stanford, GAN notebook
-    
-    Computes the discriminator loss described above.
-    
+    """  
     Inputs:
     - logits_real: PyTorch Tensor of shape (N,) giving scores for the real data (real numbers). 
     - logits_fake: PyTorch Tensor of shape (N,) giving scores for the fake data (real numbers).
@@ -25,8 +22,6 @@ def discriminator_loss(logits_real, logits_fake):
     fake_labels = torch.zeros(N)
     L2 = BCE_Loss(logits_fake, fake_labels)
     
-#     print("L1 (how bad on real data): %f\t L2 (how bad on fake data): %f" % (L1, L2))
-    
     loss = (L1 + L2)
     return loss, L1, L2
 
@@ -43,10 +38,7 @@ def generator_loss(gen_img, true_img, logits_fake, weight_param=1e-3):
     Returns:
     - loss: PyTorch Tensor containing the (scalar) loss for the generator.
     """
-    # Content loss - MSE loss for now. Ludig paper also suggests using
-    # Euclidean distance between feature vector of true image and generated image, 
-    # where we get the feature vector from a pretrained VGGnet. Probably wouldn't
-    # work for us (at least pretrained) because climate data looks so different from normal pictures
+
     content_loss_func = nn.MSELoss()
     content_loss = content_loss_func(gen_img, true_img)
         
@@ -56,7 +48,5 @@ def generator_loss(gen_img, true_img, logits_fake, weight_param=1e-3):
     adversarial_loss = BCE_Loss(logits_fake, desired_labels)
     
     total_loss = content_loss + weight_param*adversarial_loss
-#     print("Total loss: ", total_loss.cpu().detach().numpy())
-#     print("content loss: ", content_loss.cpu().detach().numpy())
-#     print("adversarial loss: ", adversarial_loss.cpu().detach().numpy())
+
     return total_loss, content_loss, adversarial_loss

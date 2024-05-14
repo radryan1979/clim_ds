@@ -1,3 +1,6 @@
+# this is hanging out because some of the adapted code calls these functions, but they generally aren't used
+
+
 from os import listdir
 from os.path import join
 
