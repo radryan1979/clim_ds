@@ -17,11 +17,11 @@ import pytorch_ssim
 #-------------------------------------------#
 
 UPSCALE_FACTOR = 2
-NUM_EPOCHS = 25
+NUM_EPOCHS = 2
 
 base_folder = '/Volumes/DataDrive/clim_model_runs/'
 out_path = '/Volumes/DataDrive/clim_model_runs/'
-run_number = 11
+run_number = 13
 
 
 #-------------------------------------------#
