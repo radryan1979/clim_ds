@@ -17,11 +17,11 @@ import pytorch_ssim
 #-------------------------------------------#
 
 UPSCALE_FACTOR = 2
-NUM_EPOCHS = 2
+NUM_EPOCHS = 25
 
-base_folder = '/Volumes/DataDrive/clim_model_runs/'
-out_path = '/Volumes/DataDrive/clim_model_runs/'
-run_number = 13
+base_folder = '/media/ryan/DataDrive/clim_model_runs/'
+out_path = '/media/ryan/DataDrive/clim_model_runs/'
+run_number = 15
 
 
 #-------------------------------------------#
@@ -39,11 +39,11 @@ print_every = 1
 
 print('using device:', device)
 
-train_directory = '/Volumes/DataDrive/clim_tif/train'
-test_directory = '/Volumes/DataDrive/clim_tif/test'
-val_directory = '/Volumes/DataDrive/clim_tif/val'
+train_directory = '/media/ryan/DataDrive/clim_tif/train'
+test_directory = '/media/ryan/DataDrive/clim_tif/test'
+val_directory = '/media/ryan/DataDrive/clim_tif/val'
 
-BATCH_SIZE = 2
+BATCH_SIZE = 1
 
 #--------------------------------------------------#
 
